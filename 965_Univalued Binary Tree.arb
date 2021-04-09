@@ -1,0 +1,43 @@
+class TreeNode
+    attr_accessor :val, :left, :right
+    def initialize(val = 0, left = nil, right = nil)
+        @val = val
+        @left = left
+        @right = right
+    end
+end
+
+def is_unival_tree(root)
+
+    queue = Queue.new 
+    if root.val != nil
+        queue << root
+    end
+    univalued = root.val
+
+    #Breath First Search
+    while !queue.empty?
+        size = queue.size
+        for i in 0...size
+            temp = queue.pop
+            
+            if temp.val != univalued
+                return false
+            end
+
+            if temp.left != nil
+                queue << temp.left
+            end
+            if temp.right != nil
+                queue << temp.right
+            end
+        end
+    end
+
+
+    return true
+end
+
+root = TreeNode.new(3, TreeNode.new(3,nil,nil), TreeNode.new(2,nil,nil))
+
+puts " #{is_unival_tree root}"

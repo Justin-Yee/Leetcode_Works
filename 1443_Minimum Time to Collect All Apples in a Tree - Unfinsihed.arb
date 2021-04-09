@@ -1,0 +1,92 @@
+#https://leetcode.com/problems/minimum-time-to-collect-all-apples-in-a-tree/discuss/623673/Concise-explanation-with-a-Picture-for-Visualization
+def recurrsive(edges,has_apple,curr_node = 0,tot_move = 0)
+    child = Array.new()
+    j = 0
+    edges.each do |i|
+        if curr_node == i[0]
+            # puts "curr_node #{curr_node} == #{i[0]} \t new #{i[1]}"
+            child << recurrsive(edges,has_apple,i[1],tot_move+1)
+        end
+        break if j == 2
+    end    
+    #has child / no child
+    #has apple / no apple
+
+    #if $n = 0 case; return immediately  
+        
+    #if no child + no apple ;return 0
+    if j == 0 && !has_apple[curr_node]
+        return 0
+    end
+    #if no child + apple; return 1    
+    #if child + apple ; return dist + childs distance
+    if has_apple[curr_node]
+        $n -= 1 
+        has_apple[curr_node] == false
+        return tot_move + child.sum
+    end
+            
+    #if child + no apple ; return childs distance
+    return child.sum
+end
+
+def min_time(n, edges, has_apple)
+    $n = n
+    return recurrsive(n,edges,has_apple)
+end
+
+# def min_time(n, edges, has_apple)
+#     count = 0
+#     has_apple.each do |i|
+#         count += 1 if i
+#     end
+
+#     queue = Array.new
+#     queue << edges[0][0] 
+#     #queue of arr untouched nodes
+#     #use stack for dfs; pipeline for bfs
+
+#     temp_move = 0
+#     tot_move = 0
+
+#     #while there are still apples; depth search
+#     while count != 0
+#         curr_node = queue.pop
+#         # curr_node = queue.last
+#         # queue.delete(queue.last)
+#         puts "curr_node #{curr_node}"
+        
+        
+#         #if there is child; add all children to parent queue
+#         #look through all edges for if curr_node == next[x][0]
+#             #add next[x][1]
+#             #if two added; break
+#         j = 0
+#         edges.each do |i|
+#             if curr_node == i[0]
+#                 puts "curr_node #{curr_node} == #{i[0]} \t new #{i[1]}"
+#                 queue << i[1]
+#             end
+#             break if j == 2
+#         end        
+
+#         #if hasApple[curr_node] == true; 
+#             #add movement from last apple node or 0 to total movement
+#             #change last apple node to curr
+
+#             #reverse dfs?
+#         if has_apple[curr_node]
+#             count -= 1 
+#             has_apple[curr_node] == false
+#             tot_mov = temp_move
+#         end
+
+#         temp_move += 1
+
+#         temp_move = tot_move if j == 0
+#     end
+
+#     return tot_mov
+# end
+
+puts "8 = #{min_time 7,[[0,1],[0,2],[1,4],[1,5],[2,3],[2,6]],[false,false,true,false,true,true,false]}"

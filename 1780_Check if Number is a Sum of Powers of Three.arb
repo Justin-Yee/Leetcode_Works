@@ -1,0 +1,36 @@
+
+
+def check_powers_of_three(n)
+    
+    pwr = 3.pow(8)
+    i = pwr >= n ? 8 : 16
+    pwr = 3.pow(i)
+    while pwr > n
+        i -= 1
+        pwr = 3.pow(i)
+    end
+
+    while (i >= 0 && n != 0)
+        if pwr <= n
+            
+            puts " #{n} - 3^#{i} = #{n-pwr}; pwr #{pwr}"
+            n -= pwr
+        end
+        
+        i -= 1
+        pwr = 3.pow(i)
+        # puts n
+
+    end
+
+    # puts "end: #{n}; #{count}"
+    return (n == 0)? true : false
+end
+
+
+
+puts "false = #{check_powers_of_three 36076}"
+# puts "false = #{check_powers_of_three 21}"
+# puts "true = #{check_powers_of_three 28}"
+# puts "true = #{check_powers_of_three 27}"
+# puts "true = #{check_powers_of_three 1}"
